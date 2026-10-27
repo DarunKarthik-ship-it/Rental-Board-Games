@@ -1,0 +1,172 @@
+/* Admin login / signup pages: calm and neutral, matching the admin portal. */
+body.mode-auth {
+  background: #eef1f5;
+  color: #1b2430;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Arial,
+    sans-serif;
+}
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+}
+.auth-card {
+  width: min(420px, 100%);
+  padding: 32px;
+  background: #fff;
+  border: 1px solid #d9dfe7;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(27, 36, 48, 0.08);
+}
+.auth-logo {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  font-size: 1.6rem;
+  background: #e2f3f2;
+  border-radius: 12px;
+}
+.auth-card h1 {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+}
+.auth-sub {
+  margin: 0 0 24px;
+  color: #556070;
+}
+.auth-page .field {
+  margin-bottom: 16px;
+}
+.auth-page .field label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+.auth-page input {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  font: inherit;
+  color: inherit;
+  background: #fff;
+  border: 1px solid #aab4c2;
+  border-radius: 8px;
+}
+.auth-page input:focus-visible,
+.auth-page .btn:focus-visible,
+.auth-page .pw-toggle:focus-visible,
+.auth-page a:focus-visible {
+  outline: 3px solid #0f766e;
+  outline-offset: 2px;
+}
+.auth-page .field.has-error input {
+  border-color: #b42318;
+  background: #fff6f5;
+}
+.auth-page .field-hint {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: #556070;
+}
+.auth-page .field-error {
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #b42318;
+}
+.auth-page .field-error:empty {
+  display: none;
+}
+.auth-page .pw-toggle {
+  margin-top: 6px;
+  padding: 4px 0;
+  font: inherit;
+  font-size: 0.85rem;
+  color: #0f766e;
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.auth-page .form-banner {
+  margin-bottom: 16px;
+  padding: 10px 12px;
+  font-weight: 600;
+  color: #b42318;
+  background: #fff1f0;
+  border: 1px solid #f3b8b3;
+  border-radius: 8px;
+}
+.auth-page .form-banner[hidden] {
+  display: none;
+}
+.auth-page .btn {
+  width: 100%;
+  min-height: 46px;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: #0f766e;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.auth-page .btn:hover {
+  background: #0b5f58;
+}
+.auth-page .btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.auth-alt {
+  margin: 20px 0 0;
+  text-align: center;
+  font-size: 0.92rem;
+}
+.auth-alt a {
+  color: #0f766e;
+  font-weight: 600;
+}
+body.mode-auth .state {
+  padding: 64px 16px;
+  text-align: center;
+  color: #556070;
+}
+body.mode-auth .state .btn {
+  padding: 10px 18px;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: #0f766e;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+body.mode-auth .spinner {
+  width: 32px;
+  height: 32px;
+  margin-inline: auto;
+  border: 4px solid #d9dfe7;
+  border-top-color: #0f766e;
+  border-radius: 50%;
+  animation: auth-spin 0.8s linear infinite;
+}
+@keyframes auth-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.mode-auth .spinner {
+    animation: none;
+  }
+}
