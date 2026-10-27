@@ -72,7 +72,7 @@ revolte:
           properties:
             port: 8080
             health: /health
-            loadBalancerMode: shared
+            loadBalancerMode: dedicated
           specifications:
             cpu: 2
             memory: 2
