@@ -49,6 +49,12 @@ function createApp({ db, config, clock = Date.now, limits = {}, logger = console
   );
   app.use(express.json({ limit: '32kb' }));
 
+  // Platform health probe. Do not expose DB details; return 200 only when SQLite responds.
+  app.get('/health', (_req, res) => {
+    db.prepare('SELECT 1').get();
+    res.status(200).json({ status: 'ok' });
+  });
+
   // Defence in depth: browsers send Origin on cross-site writes; it must match this host.
   app.use('/api', (req, _res, next) => {
     if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();

@@ -1,0 +1,14 @@
+node_modules/
+.git/
+.revolte/
+data/
+.env
+.env.*
+!.env.example
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.db
+npm-debug.log*
+coverage/
+tests/
