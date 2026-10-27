@@ -15,7 +15,7 @@ ENV NODE_ENV=production \
 
 RUN apk add --no-cache dumb-init \
     && addgroup -S app \
-    && adduser -S -u 1000 -G app app \
+    && adduser -S -G app app \
     && mkdir -p /app/data \
     && chown -R app:app /app
 
