@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "start": "PORT=4173 HOST=0.0.0.0 node src/server.js",
+  "port": 4173,
+  "install": [
+    {
+      "name": "npm dependencies",
+      "check": "test -d node_modules/express && test -d node_modules/better-sqlite3",
+      "run": "npm ci",
+      "inputs": ["package.json", "package-lock.json"]
+    }
+  ]
+}
