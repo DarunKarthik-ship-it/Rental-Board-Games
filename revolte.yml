@@ -24,7 +24,7 @@ revolte:
             PORT: '8080'
             DATABASE_PATH: ./data/rentals.sqlite
             SESSION_SECRET: '#{SESSION_SECRET}'
-            TRUST_PROXY: '0'
+            TRUST_PROXY: '1'
             PENDING_HOLD_HOURS: '24'
     qa:
       branch: qa

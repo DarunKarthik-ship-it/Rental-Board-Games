@@ -1,33 +1,33 @@
-# Multi-stage build for Board Game Rentals
-# Stage 1: Build stage (not used for this app, but shows full stages for clarity)
+# better-sqlite3 has a native Node addon. Build it with the Python and C++ toolchain in
+# this stage, then copy node_modules into the same Alpine/Node runtime for ABI compatibility.
 FROM node:22-alpine AS dependencies
 WORKDIR /build
+RUN apk add --no-cache python3 make g++
 COPY package.json package-lock.json ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
-# Stage 2: Final runtime stage
 FROM node:22-alpine
 WORKDIR /app
-ENV NODE_ENV=production
-ENV PORT=8080
+ENV NODE_ENV=production \
+    PORT=8080 \
+    HOST=0.0.0.0 \
+    DATABASE_PATH=/app/data/rentals.sqlite
 
-# Install dumb-init to handle signals properly
-RUN apk add --no-cache dumb-init
+RUN apk add --no-cache dumb-init \
+    && addgroup -S app \
+    && adduser -S -u 1000 -G app app \
+    && mkdir -p /app/data \
+    && chown -R app:app /app
 
-# Copy app code
-COPY . .
+COPY --from=dependencies --chown=app:app /build/node_modules ./node_modules
+COPY --chown=app:app package.json ./package.json
+COPY --chown=app:app src ./src
+COPY --chown=app:app public ./public
+COPY --chown=app:app admin-ui ./admin-ui
 
-# Copy production dependencies from dependencies stage
-COPY --from=dependencies /build/node_modules ./node_modules
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:8080/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
-
-# Run as non-root user
-RUN addgroup -g 1000 app && adduser -D -u 1000 -G app app
 USER app
-
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD node -e "fetch('http://127.0.0.1:8080/health').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
 EXPOSE 8080
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["node", "src/server.js"]

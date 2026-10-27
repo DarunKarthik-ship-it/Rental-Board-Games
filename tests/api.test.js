@@ -13,6 +13,13 @@ const {
 const { openDatabase } = require('../src/db');
 const { makeApp, addGame, bookingBody, signupOwner } = require('./helpers');
 
+test('health endpoint returns 200 when the database responds', async () => {
+  const { app } = makeApp();
+  const res = await request(app).get('/health');
+  assert.equal(res.status, 200);
+  assert.deepEqual(res.body, { status: 'ok' });
+});
+
 test('status transition matrix', () => {
   const statuses = Object.keys(TRANSITIONS);
   const allowed = new Set([
